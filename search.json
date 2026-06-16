@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Additional Resources",
+    "section": "",
+    "text": "The pre-requisite for this course is 140.776. All of the lecture material is available online. I encourage those enrolled in 140.777 to review the material to ensure you are familiar with these topics. Please use this as a resource to fill in any gaps in knowledge that you might have missed to ensure your success in this course, including:\n\nFamilarity with tidy principles and programming in the tidyverse\nWriting functions and loops in R\nDebugging code in R\nBest practices for data analyses\nLeveraging Python within R using reticulate"
+  },
+  {
+    "objectID": "resources.html#pre-requisites",
+    "href": "resources.html#pre-requisites",
+    "title": "Additional Resources",
+    "section": "",
+    "text": "The pre-requisite for this course is 140.776. All of the lecture material is available online. I encourage those enrolled in 140.777 to review the material to ensure you are familiar with these topics. Please use this as a resource to fill in any gaps in knowledge that you might have missed to ensure your success in this course, including:\n\nFamilarity with tidy principles and programming in the tidyverse\nWriting functions and loops in R\nDebugging code in R\nBest practices for data analyses\nLeveraging Python within R using reticulate"
+  },
+  {
+    "objectID": "resources.html#resources-for-best-practice-for-data-analyses",
+    "href": "resources.html#resources-for-best-practice-for-data-analyses",
+    "title": "Additional Resources",
+    "section": "Resources for best practice for data analyses",
+    "text": "Resources for best practice for data analyses\nIn addition to this topic being covered in 140.776, we have provided additional resources for improving your skills of writing good data analyses. This also includes avoiding common pitfalls. Here are some resources that you might find useful. If you have recommendations on other resources that should be added to the list, please share and we will gladly post them.\n\n(Some) Best practices for writing up a data analysis\nTen simple rules for effective statistical practice\nGood enough practices in scientific computing\nData Organization in Spreadsheets\nGood data analysis"
+  },
+  {
+    "objectID": "lectures.html",
+    "href": "lectures.html",
+    "title": "Course content",
+    "section": "",
+    "text": "Course content for each lecture is below:\n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nWelcome to the course\n\n\nStephanie Hicks\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "homeworks.html",
+    "href": "homeworks.html",
+    "title": "Homeworks",
+    "section": "",
+    "text": "No matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "Welcome to the Course Website for PH.140.777 Statistical Programming Paradigms and Workflows!"
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "Welcome",
+    "section": "Overview",
+    "text": "Overview\nComputing and programming are fundamental skills for applied statisticians to efficiently demonstrate the performance of their models with data, to develop reproducible data analyses or robust software, and to effectively communicate their own research interests. However, these skills are often not taught in the classroom, often making it challenging to learn these skills “on the job”.\nThis hands-on course will cover advanced statistical computing programming paradigms and workflows required for the research and application of statistical methods. Students will be expected to complete readings prior to class, attend lectures to dive deeper into those topics in class, participate in classroom activities, complete projects (both solo and group) practicing and reinforcing the computing and programming skills. There will be a final group project, which will include a major class presentation."
+  },
+  {
+    "objectID": "index.html#course-information",
+    "href": "index.html#course-information",
+    "title": "Welcome",
+    "section": "Course Information",
+    "text": "Course Information\n\nCourse Staff: Prof. Stephanie Hicks and TAs (TBA)\nLectures: 1:30-2:50pm Tuesday and Thursday. See CoursePlus for location details.\nOffice Hours: See CoursePlus for location details."
+  },
+  {
+    "objectID": "index.html#course-details",
+    "href": "index.html#course-details",
+    "title": "Welcome",
+    "section": "Course Details",
+    "text": "Course Details\nAll course details are available on the Course page. The syllabus is available on CoursePlus."
+  },
+  {
+    "objectID": "lectures/00-course-intro/index.html",
+    "href": "lectures/00-course-intro/index.html",
+    "title": "Welcome to the course",
+    "section": "",
+    "text": "Important\n\n\n\nBefore each class, there will be a set optional of pre-lecture activities and/or readings. We ask students to scan these resources prior to class to familiarize yourself with the topic. During lecture, we will go into greater detail and will answer questions about the topic. However, familarizing yourself with the topic in advance will be useful to you as we will practice these topics after the lecture in a set of in-class activities.\n\n\n\n\n\n\n\n\nTip\n\n\n\nIn advance of class, please\n\nDownload and install an Integrated Developer Evironment (IDE) such as VS Code, Positron, or RStudio on your computer. It completely up to you which IDE you are most comfortable with and which one you prefer. In case it’s helpful, the instructor will use VS Code.\nDownload and install the Quarto command line interface (CLI) on your computer\nRead through Authoring projects and websites with Quarto\nRead through (Some) Best practices for writing up a data analysis"
+  },
+  {
+    "objectID": "lectures/00-course-intro/index.html#acknowledgements",
+    "href": "lectures/00-course-intro/index.html#acknowledgements",
+    "title": "Welcome to the course",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nMaterial for this lecture was borrowed and adopted from\n\nr4ds book: https://r4ds.hadley.nz/quarto\nQuarto Publishing System: https://quarto.org"
+  },
+  {
+    "objectID": "lectures/00-course-intro/index.html#learning-objectives",
+    "href": "lectures/00-course-intro/index.html#learning-objectives",
+    "title": "Welcome to the course",
+    "section": "Learning objectives",
+    "text": "Learning objectives\n\n\n\n\n\n\nNoteLearning objectives\n\n\n\nAt the end of this lesson you will:\n\nGet an overview of the course (including staff, format, grading, etc)\nFamiliarize yourself with best practices for building good data analyses\nInstall and use an Integrated Developer Evironment (IDE) to perform statistial programming and data analyses\nRecognize what are Quarto files and how they are different from RMarkdown files or Python notebooks\nBe able to create a Quarto project and Quarto website for yourself"
+  },
+  {
+    "objectID": "lectures/00-course-intro/index.html#slides",
+    "href": "lectures/00-course-intro/index.html#slides",
+    "title": "Welcome to the course",
+    "section": "Slides",
+    "text": "Slides\n\nLecture 00: Welcome and course overview"
+  },
+  {
+    "objectID": "lectures/00-course-intro/index.html#summary",
+    "href": "lectures/00-course-intro/index.html#summary",
+    "title": "Welcome to the course",
+    "section": "Summary",
+    "text": "Summary\n\nAccess all course material on CoursePlus and course website (https://www.stephaniehicks.com/jhustatprogramming2026)\nLectures will be recorded followed by an in-class activity. Later in the course, the in-class activity will be to work on the final project\nBuilding good data analyses takes practice, but thinking about the audience, the question, and the key conclusions can be helpful to increasing clarity and trust\nIntegrated developer environment (IDEs) can make you more efficient as a programmer!\nQuarto is an open-source scientific and technical publishing system to create reproducible, production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, and more\nYou can think of Quarto as a natural successor to RMarkdown with code chunks"
+  },
+  {
+    "objectID": "lectures/00-course-intro/index.html#additional-practice",
+    "href": "lectures/00-course-intro/index.html#additional-practice",
+    "title": "Welcome to the course",
+    "section": "Additional practice",
+    "text": "Additional practice\nHere are some additional practice questions to help you think about the material discussed.\n\n\n\n\n\n\nNoteQuestions\n\n\n\n\nIn either RStudio or VSCode, create a new Quarto document. Read the instructions. Practice running the chunks individually. Then render the document and practice the appropriate keyboard short cut. Verify that you can modify the code, re-run it, and see modified output.\nCreate one new Quarto document for each of the three built-in formats: HTML, PDF and Word. Render each of the three documents. How do the outputs differ? How do the inputs differ? (You may need to install LaTeX in order to build the PDF output — RStudio will prompt you if this is necessary.)\nCreate a new Quarto website to create a website for yourself. Explore different themes and try adding new pages to the website to describe an “About Me” page."
+  },
+  {
+    "objectID": "readings.html",
+    "href": "readings.html",
+    "title": "Important reading materials",
+    "section": "",
+    "text": "The following contains relevant reading materials you should read prior to each class:\n\n\n\n\n\nNo matching items"
+  }
+]

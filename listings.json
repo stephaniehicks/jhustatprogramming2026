@@ -1,0 +1,16 @@
+[
+  {
+    "listing": "/lectures.html",
+    "items": [
+      "/lectures/00-course-intro/index.html"
+    ]
+  },
+  {
+    "listing": "/homeworks.html",
+    "items": []
+  },
+  {
+    "listing": "/readings.html",
+    "items": []
+  }
+]

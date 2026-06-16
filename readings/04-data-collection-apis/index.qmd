@@ -1,0 +1,554 @@
+---
+title: "Retrieving data from APIs with `httr2`"
+author: 
+  - name: Stephanie Hicks
+    url: https://www.stephaniehicks.com
+    affiliation: Department of Biostatistics, Johns Hopkins
+    affiliation_url: https://publichealth.jhu.edu
+description: "Introduction to JSON files and interacting with APIs with `httr2`"
+draft: true
+---
+
+Before we begin, let's load a few R packages
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(jsonlite)
+library(httr2)
+```
+
+
+# Motivation
+
+Today, we are going to talk about getting data from APIs and
+examples of common data formats. 
+
+First, let's have a bit of a philosophical discussion about data. 
+
+## "Raw" vs "Clean" data
+
+As data analysts, this is what we wished data 
+looked like whenever we start a project
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/tidy-data-example.png")
+```
+
+However, the reality, is data is rarely in that 
+form in comes in all types of _"raw"_ formats that 
+need to be transformed into a _"clean"_ format. 
+
+For example, in field of genomics, raw data 
+looks like something like this: 
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/fastq.png")
+```
+
+Or if you are interested in analyzing data from 
+Twitter: 
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/twitter-api.png")
+```
+
+Or data from Electronic Healthcare Records (EHRs): 
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/ehr.png")
+```
+
+We all have our scary spreadsheet tales. Here is 
+Jenny Bryan from Posit and UBC actually asking 
+for some of those spreadsheet tales on twitter. 
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/spreadsheet-tales.png")
+```
+
+For example, this is an actual 
+[spreadsheet from Enron in 2001](https://github.com/jennybc/2016-06_spreadsheets/blob/master/2016-06_useR-stanford.pdf): 
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/enron-spreadsheet.png")
+```
+
+## What do we mean by "raw" data? 
+
+From [https://simplystatistics.org/posts/2016-07-20-relativity-raw-data/](https://simplystatistics.org/posts/2016-07-20-relativity-raw-data/)
+raw data is defined as data... 
+
+> ...if you have done no processing, manipulation, coding, or analysis of the data. In other words, the file you received from the person before you is untouched. But it may not be the rawest version of the data. The person who gave you the raw data may have done some computations. They have a different "raw data set".
+
+## Where do data live? 
+
+Data lives anywhere and everywhere. Data 
+might be stored simply in a `.csv` or `.txt`
+file. Data might be stored in an Excel or 
+Google Spreadsheet. Data might be stored in 
+large databases that require users to write 
+special functions to interact with to extract 
+the data they are interested in. 
+
+For example, you may have heard of the terms 
+`mySQL` or `MongoDB`. 
+
+From [Wikipedia, MySQL](https://en.wikipedia.org/wiki/MySQL) 
+is defined as _an open-source relational database management system (RDBMS). Its name is a combination of "My", the name of co-founder Michael Widenius's daughter,[7] and "SQL", the abbreviation for Structured Query Language_. 
+
+From [Wikipeda, MongoDB](https://en.wikipedia.org/wiki/MongoDB)
+is defined as _"a free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata."_
+
+So after reading that, we get the sense that there
+are multiple ways large databases can be structured, 
+data can be formatted and interacted with. 
+In addition, we see that database programs 
+(e.g. MySQL and MongoDB) can also interact 
+with each other.
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/databases.png")
+```
+
+We will learn more about `JSON` today and learn about `SQL` in a later lecture more formally. 
+
+# Best practices on sharing data
+
+A great article in PeerJ was written 
+titled [_How to share data for collaboration_](https://peerj.com/preprints/3139v5.pdf), 
+in which the authors describe a set of guidelines
+for sharing data:
+
+> We highlight the need to provide raw data to the statistician, the importance of consistent formatting, and the necessity of including all essential experimental information and pre-processing steps carried out to the statistician. With these guidelines we hope to avoid errors and delays in data analysis. the importance of consistent formatting, and the necessity of including all essential experimental information and pre-processing steps carried out to the statistician.
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/ellis-datashare.png")
+```
+
+It's a great paper that describes the information 
+you should pass to a statistician to facilitate 
+the most efficient and timely analysis. 
+
+Specifically:
+
+1. The raw data (or the rawest form of the data to which you have access)
+    * Should not have modified, removed or summarized any data; Ran no software on data
+    * e.g. strange binary file your measurement machine spits out
+    * e.g. complicated JSON file you scrapped from Twitter Application Programming Interfaces (API)
+    * e.g. hand-entered numbers you collected looking through a microscope
+
+2. A clean data set
+    * This may or may not be transforming data into a `tidy` dataset, but possibly yes
+
+3. A code book describing each variable and its values in the clean or tidy data set.
+    * More detailed information about the measurements in the data set (e.g. units, experimental design, summary choices made)
+    * Doesn't quite fit into the column names in the spreadsheet
+    * Often reported in a `.md`, `.txt` or Word file. 
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/code-book.png")
+```
+
+4. An explicit and exact recipe you used to go from 1 -> 2,3
+
+```{r}
+#| echo: false
+knitr::include_graphics("https://github.com/jtleek/advdatasci/raw/master/imgs/recipe-best.png")
+```
+
+# Getting data
+
+## JSON files 
+
+JSON (or JavaScript Object Notation) is a file
+format that stores information in human-readable, 
+organized, logical, easy-to-access manner.
+
+For example, here is what a JSON file looks 
+like: 
+
+``` md
+var stephanie = {
+	"job-title" : "Associate Professor",
+	"hometown" : "Baltimore, MD",
+	"pronouns": "she/her",
+  "states-lived" : {
+    "state1" : "Louisiana",
+    "state2" : "Texas",
+    "state3" : "Massachusetts",
+    "state4" : "Maryland"
+  }
+}
+```
+
+Some features about `JSON` objects: 
+
+* JSON objects are surrounded by curly braces `{}`
+* JSON objects are written in key/value pairs
+* Keys must be strings, and values must be a valid JSON data type (string, number, object, array, boolean)
+* Keys and values are separated by a colon
+* Each key/value pair is separated by a comma
+
+
+
+## Overview of APIs
+
+[From AWS](https://aws.amazon.com/what-is/api/), API stands for **Application Programming Interface**. 
+
+- "Application" = any **software** with a distinct function
+- "Interface" = a **contract of service** between two applications. This contract defines how the two communicate with each other using requests and responses. 
+
+The **API documentation** contains information on how developers are to structure those requests and responses.
+
+:::{.callout-tip}
+
+### Purpose of APIs
+
+The purpose of APIs is enable two software components to communicate with each other using a set of definitions and protocols. 
+
+For example, the weather bureau’s software system contains daily weather data. The weather app on your phone "talks" to this system via APIs and shows you daily weather updates on your phone.
+
+:::
+
+
+### How do APIs work?
+
+To understand how APIs work, two terms that are important are 
+
+1. **client**. This is the application sending the request.
+2. **server**. This is the application sending the response.
+
+So in the weather example, the bureau's weather database is the server, and the mobile app is the client. 
+
+### Four types of API architectures
+
+There are four different ways that APIs can work depending on when and why they were created.
+
+1. **SOAP APIs**. These APIs use **Simple Object Access Protocol**. Client and server exchange messages using XML. This is a less flexible API that was more popular in the past.
+
+2. **RPC APIs**. These APIs are called **Remote Procedure Calls**. The client completes a function (or procedure) on the server, and the server sends the output back to the client.
+
+3. **Websocket APIs**. Websocket API is another **modern web** API development that uses JSON objects to pass data. A WebSocket API supports two-way communication between client apps and the server. The server can send callback messages to connected clients, making it more efficient than REST API.
+
+4. **REST APIs**. REST stands for **Representational State Transfer** (and are the most popular and flexible APIs). The client sends requests to the server as data. The server uses this client input to start internal functions and returns output data back to the client. REST defines a set of functions like GET, PUT, DELETE, etc. that clients can use to access server data. Clients and servers exchange data using HTTP.
+
+The main feature of REST API is **statelessness** (i.e. servers do not save client data between requests). Client requests to the server are similar to URLs you type in your browser to visit a website. The response from the server is plain data, without the typical graphical rendering of a web page.
+
+
+### How to use an API?
+
+The basic steps to using an API are:
+
+1. **Obtaining an API key**. This is done by creating a verified account with the API provider.
+2. **Set up an HTTP API client**. This tool allows you to structure API requests easily using the API keys received. Here, we will use functions from the `httr2` package (which is the next generation of the `httr` package). 
+3. If you don’t have an API client, you can try to structure the request yourself in your browser by referring to the API documentation.
+4. Once you are comfortable with the new API syntax, you can start using it in your code.
+
+
+### Where can I find new APIs?
+
+New web APIs can be found on API marketplaces and API directories, such as:
+
+- [Rapid API](https://rapidapi.com/) – One of the largest global API markets (10k+ public APIs). Users to test APIs directly on the platform before committing to purchase.
+- [Public REST APIs](https://www.postman.com/cs-demo/public-rest-apis/collection/tfzpqfc/public-rest-apis) – Groups REST APIs into categories, making it easier to browse and find the right one to meet your needs.
+- [APIForThat](https://apiforthat.posthaven.com/) and [APIList](https://apilist.fun) – Both these websites have lists of 500+ web APIs, along with in-depth information on how to use them.    
+
+
+# GitHub API
+
+The [GitHub REST API](https://docs.github.com/en/rest) may be of interest when studying online communities, working methods, organizational structures, communication and discussions, etc. with a focus on (open-source) software development. 
+
+Many projects that are hosted on GitHub are open-source projects with a transparent development process and communications. For private projects, which can also be hosted on GitHub, there’s understandably only a few aggregate data available.
+
+Let's say we want to use the [GitHub REST API](https://docs.github.com/en/rest) to find out how many of my GitHub repositories have open issues? 
+
+:::{.callout-tip}
+
+### Pro-tip
+
+The API can be used for free and you can send up to 60 requests per hour if you are not authenticated (i.e. if you don’t provide an API key). 
+
+For serious data collection, this is not much, so it is recommended to sign up on GitHub and generate a personal access token that acts as API key. 
+
+This token can then be used to authenticate your API requests. Your quota is then 5000 requests per hour.
+
+:::
+
+## Access the API from R
+
+There are packages for many programming languages that provide convenient access for communicating with the GitHub API, but there are no such packages (that I'm aware of) for accessing the API from R.  
+
+This means we can only access the API directly, e.g. by using the [`jsonlite`](https://cran.r-project.org/web/packages/jsonlite/index.html) package to fetch the data and convert it to an R `list` or `data.frame`.
+
+Specifically, we will use the `jsonlite::read_json()` function
+to read a JSON file into a data frame. 
+
+The JSON file is located at <https://api.github.com/users/stephaniehicks/repos>. 
+
+```{r}
+github_url <- "https://api.github.com/users/stephaniehicks/repos"
+
+library(jsonlite)
+library(tidyverse)
+jsonData <- read_json(github_url, simplifyVector = TRUE)
+glimpse(jsonData)
+```
+
+We see this has returned a data frame with the argument `simplifyVector` which converts the output from a list to a dataframe. 
+
+However, from here, we see that there are only 30 rows (or 30 repositories). 
+If you look on my github page, you can see there are more than 30 repositories. 
+
+- <https://github.com/stephaniehicks?tab=repositories> 
+
+
+:::{.callout-tip}
+
+### APIs limit info from users
+
+What's happening is called **pagination**. 
+
+At a high-level, the API is limiting the amount of items a user gets and **splitting it into pages**.
+
+Formally, pagination is the process of splitting the contents or a section of a website into discrete pages. Users tend to get lost when there's bunch of data and with pagination splitting they can concentrate on a particular amount of content. Hierarchy and paginated structure improve the readability score of the content.
+
+In this use case Github api splits the result into 30 items per resonse, depends on the request
+
+:::
+
+
+
+**Solution**: You should explicitly specify in your request how many items you would like to receive from server pagination engine, using formula for Github pagination api: 
+
+`?page=1&per_page=<numberOfItemsYouSpecify>"`
+
+You can read more about pagination here: 
+
+- <https://docs.github.com/en/rest/guides/using-pagination-in-the-rest-api>
+
+
+
+:::{.callout-tip}
+
+### Example
+
+Here we can visit this website: 
+
+- <https://api.github.com/users/stephaniehicks/repos?page=1&per_page=1000> 
+
+And see there are more than 30 repos. Let's read it into R. 
+
+```{r}
+github_url = "https://api.github.com/users/stephaniehicks/repos?page=1&per_page=1000"
+
+jsonDataAll <- read_json(github_url, simplifyVector = TRUE)
+dim(jsonDataAll)
+```
+
+We now get all the public repositories! yay! 
+
+:::
+
+
+## Access APIs with `httr2`
+
+There are a set of [basic HTTP verbs](https://docs.oracle.com/en/cloud/saas/marketing/eloqua-develop/Developers/GettingStarted/APIRequests/HTTP-verbs.htm) that allow you access a set of **endpoints**. 
+
+The basic request patterns are:
+
+- Retrieve a single item (GET)
+- Retrieve a list of items (GET)
+- Create an item (POST)
+- Update an item (PUT)
+- Delete an item (DELETE)
+
+### Example: GitHub commits
+
+Let’s say you want to retrieve information about the latest commits from a GitHub repository. We will use `httr2` to make a request to the GitHub API for a repository of your choice. Later on we will make this an **authenticated HTTP response** to the GitHub API. 
+
+First, we make sure we have the `httr2` package installed and loaded. We'll also need `jsonlite` package for handling JSON files and `dplyr` for data wrangling. 
+
+```{r}
+library(httr2)
+library(jsonlite)
+library(dplyr)
+```
+
+Now we will set up our **request** to the GitHub API. The GitHub API endpoint for getting the latest commits in a repository is at `https://api.github.com/repos/{owner}/{repo}/commits`. 
+
+For this example, we’ll look at the latest commits for the tidyverse/dplyr repository. We will use `httr2::request()` function to set up the request, (and later on we will add authentication -- optional, but recommended for higher rate limits), and parse the response.
+
+
+```{r}
+owner <- "tidyverse"
+repo <- "dplyr"
+url <- paste0("https://api.github.com/repos/", owner, "/", repo, "/commits")
+
+
+response <- request(url) %>%
+  req_perform()
+response
+```
+
+Next, we can see if the response was successful. 
+```{r}
+# Check if the response was successful
+if (resp_status(response) == 200) {
+  # Parse JSON response into an R list
+  commits <- resp_body_json(response, simplifyVector = TRUE)
+  
+  # View the first few rows of the commits data
+  head(commits)
+} else {
+  message("Failed to retrieve data. Status code: ", resp_status(response))
+}
+
+```
+
+Then, we can extract specific data from the commits including details like the commit message, author, and date. We will create a simplified data frame with just these columns.
+
+```{r}
+commits_df <- tibble(
+    sha = commits$sha,
+    author = commits$commit$author$name,
+    date = commits$commit$author$date,
+    message = commits$commit$message)
+commits_df
+```
+
+
+### Authentication
+
+Authenticating with the GitHub API via an API key allows you to send much more requests to the API. 
+
+API access keys for the GitHub API are called **personal access tokens** (PAT) and the [documentation explains how to generate a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) once you have logged into your GitHub account. 
+
+**To create a PAT**: You can create a PAT from your GitHub account (Settings > Developer settings > Personal access tokens). It’s a good idea to only grant “read” permissions.
+
+:::{.callout-tip}
+
+### Where to store API keys
+
+First, **please be careful with your PATs and never publish them.**
+
+It is suggested you keep them in your `.Renviron` file which looks something like this on the inside: 
+
+```
+GITHUB_PAT = <add my GitHub PAT here> 
+```
+
+If you do not have an `.Renviron` file in your home directory, you can make one: 
+
+``` bash
+cd ~
+touch .Renviron
+```
+
+If you want additional guidance on where you should store them, I like this post: 
+
+- <https://www.r-bloggers.com/2015/11/how-to-store-and-use-webservice-keys-and-authentication-details-with-r/> 
+
+:::
+
+
+Assuming you have created and stored an API key in the `.Renviron` file in your home directory, you can fetch it with the `Sys.getenv()` function and use the PAT in our `httr2` request. 
+
+```{r}
+# Read the PAT from environment variables
+github_pat <- Sys.getenv("GITHUB_PAT")
+
+# Make the GET request with PAT for authentication
+response <- request(url) %>%
+  req_auth_bearer_token(github_pat) %>%
+  req_perform()
+```
+
+Now, we check the response as before
+```{r}
+if (resp_status(response) == 200) {
+  commits <- resp_body_json(response, simplifyVector = TRUE)
+  commits_df <- tibble(
+    sha = commits$sha,
+    author = commits$commit$author$name,
+    date = commits$commit$author$date,
+    message = commits$commit$message)
+  commits_df
+} else {
+  message("Failed to retrieve data. Status code: ", resp_status(response))
+}
+```
+
+
+
+### Example: Learn about Stephanie
+
+
+Let's start by using the GitHub API to learn information about myself (Stephanie Hicks). 
+First, let's check out <https://api.github.com/users/stephaniehicks>. 
+
+Now, we have decided to explore <https://api.github.com/users/stephaniehicks/repos>. 
+
+To use `httr2`, start by creating a request:
+
+```{r}
+owner <- "stephaniehicks"
+url <- paste0("https://api.github.com/users/", owner,"/repos")
+
+# Make the GET request with PAT for authentication
+response <- request(url) %>%
+  req_auth_bearer_token(github_pat) %>%
+  req_perform()
+
+stephanie <- resp_body_json(response, simplifyVector = TRUE)
+```
+
+We convert the response to a parsed JSON file (or a list). 
+
+## A bit of EDA fun
+
+Let's have a bit of fun and explore some questions:  
+
+- How many public repositories do I have that people have forked? 
+
+```{r}
+stephanie$forks
+```
+
+What's the most popular language? 
+
+```{r}
+table(stephanie$language)
+```
+
+To find out how many repos that I have
+with open issues, we can just create 
+a table: 
+
+```{r}
+# how many repos have open issues? 
+table(stephanie$open_issues)
+```
+
+Whew! Not as many as I thought.
+
+:::{.callout-tip}
+
+
+
+## Other examples with GitHub API
+
+Finally, I will leave you with a few other examples of using GitHub API: 
+
+* [How long does it take to close a GitHub Issue in the `dplyr` package?](https://blog.exploratory.io/analyzing-issue-data-with-github-rest-api-63945017dedc)
+* [How to retrieve all commits for a branch](https://stackoverflow.com/questions/9179828/github-api-retrieve-all-commits-for-all-branches-for-a-repo)
+* [Getting my GitHub Activity](https://masalmon.eu/2017/12/21/wherehaveyoubeen/)

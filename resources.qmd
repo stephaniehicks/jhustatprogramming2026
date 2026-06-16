@@ -1,0 +1,33 @@
+---
+title: "Additional Resources"
+format: html
+---
+
+## Pre-requisites
+
+The pre-requisite for this course is 140.776. All of the lecture material is 
+[available online](https://lcolladotor.github.io/jhustatcomputing/). I 
+encourage those enrolled in 140.777 to review the material to ensure you are 
+familiar with these topics. Please use this as a resource to fill in any gaps 
+in knowledge that you might have missed to ensure your success in this
+course, including: 
+
+- Familarity with tidy principles and programming in the `tidyverse` 
+- Writing functions and loops in R
+- Debugging code in R
+- Best practices for data analyses
+- Leveraging Python within R using `reticulate`
+
+## Resources for best practice for data analyses
+
+In addition to this topic being covered in 140.776, we have provided additional 
+resources for improving your skills of writing good data analyses. This also 
+includes avoiding common pitfalls. Here are some resources that you might 
+find useful. If you have recommendations on other resources that should be 
+added to the list, please share and we will gladly post them. 
+
+- [(Some) Best practices for writing up a data analysis](readings/00-best-practices-data-analysis/index.qmd)
+- [Ten simple rules for effective statistical practice](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004961)
+- [Good enough practices in scientific computing](https://doi.org/10.1371/journal.pcbi.1005510)
+- [Data Organization in Spreadsheets](https://doi.org/10.1080/00031305.2017.1375989)
+- [Good data analysis](https://developers.google.com/machine-learning/guides/good-data-analysis)

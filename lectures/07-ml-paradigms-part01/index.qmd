@@ -1,0 +1,249 @@
+---
+title: "Machine learning paradigms and workflows -- Part 01"
+author: 
+  - name: Stephanie Hicks
+    url: https://stephaniehicks.com
+    affiliation: Department of Biostatistics, Johns Hopkins
+    affiliation_url: https://publichealth.jhu.edu
+description: "Overview of ML paradigms and workflows in R"
+draft: true
+---
+
+# Pre-lecture activities
+
+::: callout-tip
+
+In advance of class, please install
+
+* `tidymodels` - collection of packages for modeling and machine learning using tidyverse principles
+
+You can do this by calling
+
+```{r}
+#| eval: false
+install.packages("tidymodels")
+```
+
+And load the package using: 
+
+```{r}
+#| message: false
+library(tidymodels)
+```
+
+In addition, please 
+
+- Check out the [Getting Started](https://www.tidymodels.org/start/) guide in `tidymodels`
+
+:::
+
+
+# Lecture 
+
+## Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+- [An Introduction to Statistical Learning](https://www.statlearning.com)
+
+## Learning objectives
+
+::: callout-note
+### Learning objectives
+
+**At the end of this lesson you will:**
+
+-  State the differences between machine learning paradigms including supervised, unsupervised, semi-supervised, and reinforcement Learning
+-  Be familiar with logistic regression and random forests as two types of classification methods in supervised learning  
+-  Recognize evaluation techniques
+-  Use `tidymodels` as collection of packages for modeling and machine learning using `tidyverse` principles 
+
+:::
+
+
+
+## Slides 
+
+- [Lecture 07: Machine learning paradgims -- Part 01]()
+
+# Class activity 
+
+For the rest of the time in class, you and your team will work on the final project. Stephanie will walk around to answer questions and happy to help in any way! 
+
+
+# Post-lecture
+
+## Additional practice
+
+Here are some additional practice questions to help you think about the material discussed.
+
+### Question 1
+
+Using `penguins` dataset discussed in class, we will practice more model 
+building by experimenting with other features. In our first logistic 
+regression, we only used two features (`bill_length_mm` and 
+`flipper_length_mm`). In the second, we added `body_mass_g` and `species`.
+
+Now, fit a third logistic regression model that uses only `bill_length_mm` 
+and `body_mass_g` as input features (X). Compute the accuracy and Kappa metrics 
+using `metrics()`. Compare the results to both of the previous logistic 
+regression models. Which combination of predictors yields the best performance, 
+and why might that be? The purpose of this question is to help build intuition 
+about how including or excluding features affects predictive accuracy and 
+model interpretability.
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+library(tidymodels)
+library(palmerpenguins)
+
+penguins <- na.omit(penguins)
+
+# Logistic regression using only bill_length_mm and body_mass_g
+logistic_model_q1 <- 
+  logistic_reg() %>% 
+  set_engine("glm") %>% 
+  fit(sex ~ bill_length_mm + body_mass_g, data = penguins)
+
+# Examine model coefficients
+tidy(logistic_model_q1)
+
+# Make predictions
+logistic_preds_q1 <- predict(logistic_model_q1, penguins) %>%
+  bind_cols(penguins)
+
+# Evaluate model performance
+logistic_preds_q1 %>%
+  metrics(truth = sex, estimate = .pred_class)
+```
+
+We saw that `flipper_length_mm` was not an informative feature, but it seems 
+like `body_mass_g` is an informative variable! When we drop uninformative 
+features and add informative features to the model, the predictive accuracy 
+improves. It also helps model interpretability because we are keeping only a
+minmial set of features in the model.
+
+:::
+
+### Question 2
+
+In class, we compared logistic regression to random rorest models. We also 
+computed the accuracy and Kappa for both the random forest and logistic 
+regression models. Which performed better on this dataset? Why might the 
+random forest outperform (or underperform) logistic regression here?
+
+::: {.callout-tip}
+
+Use `vip::vip(rf_fit)` to visualize which features the random forest 
+considered most important. If you do this, you will need to modify 
+`set_engine("ranger", importance = "impurity")` to calculate `importance`
+
+:::
+
+The purpose of this question is to compare model types and interpret 
+variable importance in tree-based models.
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+library(vip)
+
+# Logistic regression with multiple predictors
+logistic_model_q2 <- 
+  logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(sex ~ bill_length_mm + flipper_length_mm + body_mass_g + species, 
+      data = penguins)
+
+# Random forest with same predictors
+rf_spec_q2 <- rand_forest(mtry = 3) %>%
+  set_engine("ranger", importance = "impurity") %>%
+  set_mode("classification")
+
+rf_fit_q2 <- rf_spec_q2 %>%
+  fit(sex ~ bill_length_mm + flipper_length_mm + body_mass_g + species, 
+      data = penguins)
+
+# Evaluate both models
+logistic_preds_q2 <- predict(logistic_model_q2, penguins) %>%
+  bind_cols(penguins)
+
+rf_preds_q2 <- predict(rf_fit_q2, penguins) %>%
+  bind_cols(penguins)
+
+metrics(logistic_preds_q2, truth = sex, estimate = .pred_class)
+metrics(rf_preds_q2, truth = sex, estimate = .pred_class)
+
+# Visualize feature importance for random forest
+vip(rf_fit_q2)
+```
+
+We see that random forest performed better than logistic regression. 
+This is because random forest can model complex, non-linear decision 
+boundaries, while logistic regression assumes a linear relationship 
+between the features and the log-odds of the outcome.
+
+Also random forest can help with overfitting. It creates an ensemble of 
+multiple decision trees and averaging their predictions. Therefore, random 
+forest is more robust and less prone to overfitting than a single decision tree.
+
+It also provides a measure of which features are most important for making 
+predictions, which can be useful for understanding the data.
+
+:::
+
+### Question 3
+
+The random forest model was trained and evaluated on the entire dataset. 
+That’s not ideal for assessing generalization of how well the model will 
+perform on data it was not trained on. 
+
+Next, use `initial_split()` from `rsample` to create a training (80%) 
+and testing (20%) dataset. Fit your random forest on the training data and 
+compute metrics on the test data. Compare the test accuracy to the earlier 
+“full dataset” accuracy. What does the difference tell you about 
+potential overfitting? The purpose of this question is to practice a strategy 
+that can improve the model-building workflow that we will learn about 
+in our next lecture. 
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+set.seed(123)
+peng_split <- initial_split(penguins, prop = 0.8)
+peng_train <- training(peng_split)
+peng_test  <- testing(peng_split)
+
+# Reuse the same random forest specification
+rf_spec_q3 <- rand_forest(mtry = 3) %>%
+  set_engine("ranger", importance = "impurity") %>%
+  set_mode("classification")
+
+# Fit model on training data
+rf_fit_q3 <- rf_spec_q3 %>%
+  fit(sex ~ bill_length_mm + flipper_length_mm + body_mass_g + species, 
+      data = peng_train)
+
+# Evaluate on test data
+rf_preds_q3 <- predict(rf_fit_q3, peng_test) %>%
+  bind_cols(peng_test)
+
+metrics_train <- predict(rf_fit_q3, peng_train) %>%
+  bind_cols(peng_train) %>%
+  metrics(truth = sex, estimate = .pred_class)
+
+metrics_test <- rf_preds_q3 %>%
+  metrics(truth = sex, estimate = .pred_class)
+
+metrics_train
+metrics_test
+```
+
+The performance dropped in the test data, therefore we are potentially
+overfitting when we fit our models. 
+
+:::

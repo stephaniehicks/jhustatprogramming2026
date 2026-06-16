@@ -1,0 +1,277 @@
+---
+title: "Version control -- Part 02"
+author: 
+  - name: Stephanie Hicks
+    url: https://stephaniehicks.com
+    affiliation: Department of Biostatistics, Johns Hopkins
+    affiliation_url: https://publichealth.jhu.edu
+description: "Version control -- Part 02"
+draft: true
+---
+
+# Pre-lecture activities
+
+::: callout-tip
+
+In advance of class, please follow the instructions on [Software Carpentry: Version Control with Git](https://swcarpentry.github.io/git-novice) to
+
+1. [Set up git](https://swcarpentry.github.io/git-novice/02-setup.html)
+2. Create a [GitHub Account](https://github.com › signup)
+3. Familarize yourself with some of the basic git commands in [Chapters 1 to 9](https://swcarpentry.github.io/git-novice). If you have used git before, these commands are likely familiar to you already. If you have never used git for version control, I encourage you to skim the material to learn some of the terminology and basics. You are not expected to spend multiple hours on this, but during class, I will give an overview of git comands and then we will practice the commands with an in-class activity. If you have never used git commands before or you are not comfortable with executing commands in the terminal, it will be challenging to participate in the activity at the end of lecture.
+4. Find your [working directory](https://en.wikipedia.org/wiki/Working_directory) using the `pwd` command and create a new folder in your working directory called `test-folder` that can use `git init` to initalize a repo with a git history to test if `git` is working on your computer. 
+
+:::
+
+::: {.callout-note}
+
+## Advanced topics 
+
+If you want to get to know more advanced git topics, check out the [Advanced Git Version Control](https://carpentries-incubator.github.io/advanced-git/) from the Carpentries. 
+
+:::
+
+# Lecture 
+
+## Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+- [Software Carpentry: Version Control with Git](https://swcarpentry.github.io/git-novice)
+
+## Learning objectives
+
+::: callout-note
+### Learning objectives
+
+**At the end of this lesson you will:**
+
+- Understand the benefits of an automated version control system
+- Understand how to set up git
+- Understand how to set up a git repository
+- Understand how to track changes, explore history, and ignore files in a git 
+- Understand git remotes
+- Understand how to use GitHub
+- Understand collaborating
+- Recognize the terminology of branching and forking
+
+:::
+
+
+
+## Slides 
+
+- [Lecture 03: Version control -- Part 02]()
+
+# Class activity 
+
+For the rest of the time in class, we will practice using version control to collaborate with other people. 
+
+::: callout-note
+### Objectives of the activity
+
+-   Clone a remote repository using `git clone`.
+-   Collaborate by using `git add`, `git commit`, `git push`, and `git pull` to a common repository.
+-   Describe the basic collaborative workflow.
+:::
+
+For this in-class activity, you need to find a partner. One person will be the "Owner" of a GitHub repository and the other will be the "Collaborator" on the GitHub repository. 
+
+The goal of the activity is that the Collaborator and Owner will alternate adding content to a GitHub repository working on collaboratively on a project. We will switch roles at the end, so both people will play Owner and Collaborator.
+
+## Part 1: Repository Setup
+
+- **Create a new repository**. One partner (the "Owner" of the GitHub repo) should create a GitHub repository titled `bikelanes` in their own personal GitHub repository.
+- **Invite a collaborator**. The repository owner needs to invite their partner as a collaborator by going to `Settings > Collaborators > Manage Access`. Specifically, on GitHub, click the "Settings" button on the right, select "Collaborators", click "Add people", and then enter your partner's GitHub username.
+
+To accept access to the Owner's repo, the Collaborator needs to go to `https://github.com/notifications` or check for email notification. Once there you can accept access to the Owner's repo.
+
+- **Clone the repository**. Both the Owner and Collaborator should clone the repository locally to their respective computers. 
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+If using SSH:
+
+`git clone git@github.com:<change-to-owners-github-username>/bikelanes.git`
+
+If using HTTPS: 
+
+`git clone https://github.com/<change-to-owners-github-username>/bikelanes.git`
+
+:::
+
+## Part 2: Adding content to the repository 
+
+- **Add a CSV file to the local repository**. Consider the dataset called `bike_lanes_data.csv` with the following contents: 
+
+```
+Lane_ID,Street_Name,Length_km,Type,Year_Installed,City
+1,Main St,1.2,Protected,2018,Springfield
+2,Elm St,0.8,Shared,2016,Springfield
+3,Maple Ave,2.3,Buffered,2020,Springfield
+4,Oak St,1.5,Protected,2019,Springfield
+5,Pine St,0.5,Shared,2015,Springfield
+6,River Rd,3.1,Buffered,2021,Springfield
+```
+
+The Owner should create a new CSV locally titled `bike_lanes_data.csv` and paste the data into the new CSV file. Save the file and commit the file to the local repository using `git` commands. 
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```
+cd bikelanes
+touch bike_lanes_data.csv # (and paste in the content above)
+git status
+git add bike_lanes_data.csv
+git commit -m "adding bike lanes data"
+git push origin main
+```
+:::
+
+- **Collaborator needs to pull the new changes locally to their computer**. Next, the collaborator should pull the changes from the remote `bikelanes` GitHub repository to their local computer. This should make the new `bike_lanes_data.csv` appear locally on their computer. 
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```
+cd bikelanes
+git pull origin main
+```
+
+:::
+
+- **Add a `README.md` file**. The collaborator should create a new file called `README.md` in the `bikelanes` repository. Please add the following information to it:
+
+1. The names of the owner and collaborator of the project
+2. The emails of the owner and collaborator of the project
+3. Answers to the following questions: 
+    - Do you enjoy biking? 
+    - What type of biking (e.g. road biking, mountain biking, no biking, etc ) do you enjoy? 
+    - If not biking, what hobbies do you enjoy doing? 
+
+After the `README.md` file is complete, add and commit the file to the local repository using `git` commands. Push the changes to the remote `bikelanes` repository on GitHub. 
+
+::: {.callout-tip collapse="true"}
+
+### Solution
+
+```
+touch README.md # (add the content)
+git status
+git add README.md
+git commit -m "adding readme file"
+git push
+```
+
+:::
+
+
+- **Owner needs to pull the new changes locally to their computer**. Next, the owner of the repository should pull the changes from the remote `bikelanes` GitHub repository to their local computer. This should make the new `REAMDE.md` appear locally on their computer. 
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```
+cd bikelanes
+git pull
+```
+
+:::
+
+## Part 3: Create GitHub issues to assign tasks
+
+The partners should create at least one Github Issue for a set of future tasks for the project (e.g., "Add bike lane data from our local area" or "Write code to analyze bike lane usage trends").
+
+Assign these issues to each other and set a due date, if desired.
+
+## Part 4: Review the git history 
+
+Both partners should review the commit history using `git` commands
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+Expected commands: `git log`
+
+:::
+
+## Part 5: Switch roles and repeat process 
+
+Switch roles and repeat the whole process. 
+
+
+##  Reflection Questions
+
+- What challenges did you encounter when collaborating on GitHub?
+- How did using Issues help you coordinate work?
+- In what ways could GitHub features be useful for larger projects, such as full bike lane data studies?
+
+
+# Post-lecture
+
+::: {.callout-tip collapse="true"}
+### A Typical Work Session
+
+A short example of a typical workflow in an order that will minimize merge conflicts:
+
+-   Update local repo: `git pull origin main`
+-   Make changes: e.g. `echo 100 >> numbers.txt`
+-   Stage changes: `git add numbers.txt`
+-   Commit changes: `git commit -m "Add 100 to numbers.txt"`
+-   Update remote: `git push origin main`
+:::
+
+Thre are other resources available on the [Software Carpentry](https://swcarpentry.github.io/git-novice)'s website in particularly around: 
+
+- The importance of how version control can help your work more open and support [Open Science](https://swcarpentry.github.io/git-novice/10-open.html). Open scientific work is more useful and more highly cited than closed. 
+- What type of licensing should you consider to include with your work on [Licensing](https://swcarpentry.github.io/git-novice/11-licensing.html). 
+- How to make your work easier to cite with the less on [Citations](https://swcarpentry.github.io/git-novice/12-citation.html). 
+
+
+## Additional practice
+
+Here are some additional practice questions to help you think about the material discussed.
+
+::: callout-note
+### Questions
+
+- **Initialize a new Git repository**. 
+   1. Create a new folder on your computer.
+   2. Use the git init command to turn it into a Git repository. 
+   3. Configure your name and email using   git config --global user.name "Your Name"` and `git config --global user.email "you@example.com"`.
+
+Goal: Learn to set up Git for the first time and understand how Git tracks your identity.
+
+- **Create a new file and commit it**. 
+   1. Create a simple text file in your repository (e.g., README.md).
+   2. Use `git add <filename>` to stage the file.
+   3. Use `git commit -m "Initial commit"` to commit it to the repository.
+  
+Goal: Understand how to add and commit files in Git.
+
+- **Modify a file and create a new commit**.
+   1. Make changes to the file (e.g., add some text to the README.md).
+   2. Stage the changes and commit them using git add and git commit.
+   3. Use `git log` to see the history of your commits.
+
+Goal: Learn how to track changes over time and inspect the commit history.
+
+- **Work with branches**.
+  1. Create a new branch using `git checkout -b feature-branch`.
+  2. Make changes to a file, stage, and commit them.
+  3. Switch back to the main branch (`git checkout main`).
+  4. Merge your changes from `feature-branch` into `main` using `git merge feature-branch`.
+
+Goal: Understand how branching works and how to merge changes from different branches.
+
+- **Simulate and resolve a merge conflict**.
+  1. On the main branch, edit a line in a file and commit the change.
+  2. Switch to a new branch (`git checkout -b conflicting-branch`), edit the same line differently, and commit it.
+  3. Merge the `conflicting-branch` back into `main` and resolve the merge conflict manually.
+  4. Use `git status` to see the files with conflicts and edit them to resolve.
+  5. Commit the resolved changes.
+
+Goal: Learn how to handle merge conflicts and understand conflict markers.
+
+:::

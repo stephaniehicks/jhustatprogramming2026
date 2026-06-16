@@ -1,0 +1,91 @@
+---
+title: "Welcome to the course"
+author: 
+  - name: Stephanie Hicks
+    url: https://stephaniehicks.com
+    affiliation: Department of Biostatistics, Johns Hopkins
+    affiliation_url: https://publichealth.jhu.edu
+description: "Overview of course and Hello Quarto!"
+---
+
+# Pre-lecture activities
+
+::: {.callout-important}
+
+Before each class, there will be a set **optional** of pre-lecture activities 
+and/or readings. We ask students to scan these resources prior to class to 
+familiarize yourself with the topic. During lecture, we will go into greater 
+detail and will answer questions about the topic. However, familarizing 
+yourself with the topic in advance will be useful to you as we will practice
+these topics after the lecture in a set of in-class activities. 
+
+:::
+
+::: callout-tip
+
+In advance of class, please 
+
+1. Download and install an Integrated Developer Evironment (IDE) such as [VS Code](https://code.visualstudio.com/), [Positron](https://positron.posit.co/), or [RStudio](https://posit.co/downloads/) on your computer. It completely up to you which IDE you are most comfortable with and which one you prefer. In case it's helpful, the instructor will use VS Code. 
+2. Download and install the [Quarto command line interface](https://quarto.org/docs/get-started/)  (CLI) on your computer
+3. Read through [Authoring projects and websites with Quarto](../../readings/00-quarto/index.qmd) 
+4. Read through [(Some) Best practices for writing up a data analysis](../../readings/00-best-practices-data-analysis/index.qmd) 
+
+:::
+
+# Lecture 
+
+## Acknowledgements
+
+Material for this lecture was borrowed and adopted from
+
+- r4ds book: <https://r4ds.hadley.nz/quarto>
+- Quarto Publishing System: <https://quarto.org>
+
+
+## Learning objectives
+
+::: callout-note
+### Learning objectives
+
+**At the end of this lesson you will:**
+
+-   Get an overview of the course (including staff, format, grading, etc)
+-   Familiarize yourself with best practices for building good data analyses 
+-   Install and use an Integrated Developer Evironment (IDE) to perform statistial programming and data analyses
+-   Recognize what are Quarto files and how they are different from RMarkdown files or Python notebooks
+-   Be able to create a Quarto project and Quarto website for yourself
+
+:::
+
+
+## Slides 
+
+- [Lecture 00: Welcome and course overview]()
+
+
+# Post-lecture
+
+## Summary 
+
+- Access all course material on CoursePlus and course website (<https://www.stephaniehicks.com/jhustatprogramming2026>)
+- Lectures will be recorded followed by an in-class activity. Later in the course, the in-class activity will be to work on the final project
+- Building good data analyses takes practice, but thinking about the audience, the question, and the key conclusions can be helpful to increasing clarity and trust
+- Integrated developer environment (IDEs) can make you more efficient as a programmer! 
+- Quarto is an open-source scientific and technical publishing system to create reproducible, production quality articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, and more
+- You can think of Quarto as a natural successor to RMarkdown with code chunks
+
+## Additional practice
+
+Here are some additional practice questions to help you think about the material discussed.
+
+::: callout-note
+
+### Questions
+
+1.  In either RStudio or VSCode, create a new Quarto document. Read the instructions. Practice running the chunks individually. Then render the document and practice the appropriate keyboard short cut. Verify that you can modify the code, re-run it, and see modified output.
+
+2.  Create one new Quarto document for each of the three built-in formats: HTML, PDF and Word. Render each of the three documents. How do the outputs differ? How do the inputs differ? (You may need to install LaTeX in order to build the PDF output --- RStudio will prompt you if this is necessary.)
+
+3.  Create a new Quarto website to create a website for yourself. Explore different themes and try adding new pages to the website to describe an "About Me" page. 
+
+:::

@@ -1,0 +1,39 @@
+---
+title: "Introduction to High Performance Computing"
+author: 
+  - name: Stephanie Hicks
+    url: https://stephaniehicks.com
+    affiliation: Department of Biostatistics, Johns Hopkins
+    affiliation_url: https://publichealth.jhu.edu
+description: "Introduction to High Performance Computing"
+draft: true
+---
+
+# Pre-lecture activities
+
+::: callout-tip
+
+TBA 
+:::
+
+
+# Lecture 
+
+
+## Learning objectives
+
+::: callout-note
+### Learning objectives
+
+**At the end of this lesson you will:**
+
+- TBA 
+
+:::
+
+## Slides 
+
+- [Lecture 11: Introduction to High Performance Computing]()
+
+# Class activity 
+

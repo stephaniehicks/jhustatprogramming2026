@@ -1,0 +1,85 @@
+---
+title: "Building static and interactive dashboards"
+author: 
+  - name: Stephanie Hicks
+    url: https://stephaniehicks.com
+    affiliation: Department of Biostatistics, Johns Hopkins
+    affiliation_url: https://publichealth.jhu.edu
+description: "Introduction to building dashboards in R"
+draft: true
+---
+
+# Pre-lecture activities
+
+::: callout-tip
+
+In advance of class, please install three additional packages:
+
+* `shiny` - this provides functionality to create interactive dashboard elements
+
+You can do this by calling
+
+```{r}
+#| eval: false
+install.packages(c("shiny"))
+```
+
+In addition, please read through
+
+1. Information about creating quarto dashboards: <https://quarto.org/docs/dashboards/>
+2. Examples of quarto dashboards: <https://quarto.org/docs/gallery/#dashboards>
+
+:::
+
+
+# Lecture 
+
+
+## Learning objectives
+
+::: callout-note
+### Learning objectives
+
+**At the end of this lesson you will:**
+
+- Know how to create a static quarto dashboard to display data analysis elements
+- Add interactive elements to your dashboard using tools from the `shiny` package
+- Have resources to assist you in developing your own more complex dashboard to clearly present data and interactive elements
+
+:::
+
+
+
+## Slides 
+
+- [Lecture 09: Building static and interactive dashboards]()
+
+
+## Deploying a dashboard
+
+Here are some helpful pointers for getting a free `Shinyapps.io` account and then publishing your dashboard to the web:
+
+::: callout-tip
+
+### Deploying a Shiny app in RStudio
+
+1. Sign up for a free account on [http://www.shinyapps.io/](http://www.shinyapps.io/)
+2. Install the `rsconnect` package: `install.packages("rsconnect")`
+3. Check out these instructions to deploy on ShinyApps.io (<https://quarto.org/docs/interactive/shiny/running.html#shinyapps>)
+4. If you want to delete the app (unpublish it), you need to do this from within your shinyapps.io account.  Go to [http://www.shinyapps.io/](http://www.shinyapps.io/) and log in to your account.  Click on applications to manage your applications.  You must first archive your app before you can delete it.
+:::
+
+# Class activity 
+
+For the rest of the time in class, you and your team will work on the final project. Stephanie will walk around to answer questions. 
+
+# Post-lecture
+
+::: callout-tip
+Here are a list of resources on Shiny:
+
+* Main page: <https://shiny.posit.co/>
+* Awesome tutorial: <https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/>
+
+:::
+

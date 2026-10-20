@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fd0e6b991c9841115f99ec6603b0f128.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-bd96c79fb341d3a7dc5cc66cf6f7c539.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -176,12 +179,13 @@ ul.task-list li input[type="checkbox"] {
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>Computing and programming are fundamental skills for applied statisticians to efficiently demonstrate the performance of their models with data, to develop reproducible data analyses or robust software, and to effectively communicate their own research interests. However, these skills are often not taught in the classroom, often making it challenging to learn these skills “on the job”.</p>
-<p>This hands-on course will cover advanced statistical computing programming paradigms and workflows required for the research and application of statistical methods. Students will be expected to complete readings prior to class, attend lectures to dive deeper into those topics in class, participate in classroom activities, complete projects (both solo and group) practicing and reinforcing the computing and programming skills. There will be a final group project, which will include a major class presentation.</p>
+<p>This hands-on course will cover advanced statistical computing programming paradigms and workflows required for the research and application of statistical methods. Students will be expected to attend lectures, complete weekly lab assignments, and complete in person quizzes and exams. There will be a final group project, which will include a major class presentation.</p>
 </section>
 <section id="course-information" class="level2">
 <h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
 <ul>
-<li>Course Staff: <a href="https://www.stephaniehicks.com">Prof.&nbsp;Stephanie Hicks</a> and TAs (TBA)</li>
+<li>Course Co-Instructors: <a href="https://www.stephaniehicks.com">Prof.&nbsp;Stephanie Hicks</a> and <a href="https://jdonnelly36.github.io/">Prof.&nbsp;Jon Donnelly</a></li>
+<li>Course TAs: Lidio Jaimes Jr and Bella Horton</li>
 <li>Lectures: 1:30-2:50pm Tuesday and Thursday. See CoursePlus for location details.</li>
 <li>Office Hours: See CoursePlus for location details.</li>
 </ul>
@@ -267,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/stephaniehicks\.github\.io\/jhustatprogramming2026\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

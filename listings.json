@@ -11,6 +11,9 @@
   },
   {
     "listing": "/readings.html",
-    "items": []
+    "items": [
+      "/readings/00-best-practices-data-analysis/index.html",
+      "/readings/00-quarto/index.html"
+    ]
   }
 ]

@@ -7,8 +7,7 @@ author:
     affiliation_url: https://publichealth.jhu.edu
 description: "Things to think about when writing up better data analyses"
 bibliography: references.bib
-draft: true
-
+draft: false
 ---
 
 # Overview

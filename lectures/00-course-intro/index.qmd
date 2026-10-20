@@ -25,7 +25,7 @@ these topics after the lecture in a set of in-class activities.
 
 In advance of class, please 
 
-1. Download and install an Integrated Developer Evironment (IDE) such as [VS Code](https://code.visualstudio.com/), [Positron](https://positron.posit.co/), or [RStudio](https://posit.co/downloads/) on your computer. It completely up to you which IDE you are most comfortable with and which one you prefer. In case it's helpful, the instructor will use VS Code. 
+1. Download and install an Integrated Developer Evironment (IDE) such as [VS Code](https://code.visualstudio.com/), [Positron](https://positron.posit.co/), or [RStudio](https://posit.co/downloads/) on your computer. It completely up to you which IDE you are most comfortable with and which one you prefer. In case it's helpful, the instructors will use VS Code. 
 2. Download and install the [Quarto command line interface](https://quarto.org/docs/get-started/)  (CLI) on your computer
 3. Read through [Authoring projects and websites with Quarto](../../readings/00-quarto/index.qmd) 
 4. Read through [(Some) Best practices for writing up a data analysis](../../readings/00-best-practices-data-analysis/index.qmd) 
@@ -60,7 +60,7 @@ Material for this lecture was borrowed and adopted from
 
 ## Slides 
 
-- [Lecture 00: Welcome and course overview]()
+- [Lecture 00: Welcome and course overview](https://docs.google.com/presentation/d/1e66tFHGnKh0bZ0uhAT8i0BVqByCX6KHvsHXczLHprWw/edit?usp=sharing)
 
 
 # Post-lecture

@@ -7,8 +7,7 @@ author:
     affiliation: Department of Biostatistics, Johns Hopkins
     affiliation_url: https://publichealth.jhu.edu
 description: "Hello Quarto! Or next-generation literate programming"
-date: 2025-10-23
-draft: true
+draft: false
 ---
 
 ```{r}
@@ -47,6 +46,7 @@ Formally, [Quarto](https://quarto.org/) is a publishing system built on Pandoc t
 ::: column-margin
 Art by [Allison Horst](https://twitter.com/allison_horst). Be sure to check out the rest of Allison's seriously cute Quarto penguin art in the #rstudioconf2022 keynote talk, [Hello Quarto](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title), by [Julie Lowndes](https://twitter.com/juliesquid) & [Mine Çetinkaya-Rundel](https://twitter.com/minebocek)!
 :::
+
 
 ## Prerequisites
 

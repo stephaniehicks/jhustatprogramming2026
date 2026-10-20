@@ -10,7 +10,6 @@ knitr: true
 draft: true
 ---
 
-
 # Motivation 
 
 If you have ever heard the phrase 
